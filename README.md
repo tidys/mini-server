@@ -4,8 +4,8 @@
 
 使用方法，在命令行里输入
 
-> sudo npm i xy-sever -g
+> sudo npm i mini-sever -g
 
 > cd xxxxx
 
-> xy-server
+> mini-server
