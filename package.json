@@ -1,10 +1,10 @@
 {
-  "name": "@xuyanfeng/mini-server",
+  "name": "xy-server",
   "version": "1.0.0",
   "description": "local http server",
   "main": "index.js",
   "bin": {
-    "mini-server": "./index.js"
+    "xy-server": "./index.js"
   },
   "scripts": {
   },
