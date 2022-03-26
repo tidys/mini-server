@@ -2,6 +2,7 @@
 let express = require('express');
 let App = express();
 const Os = require('os');
+const Fs = require('fs');
 // App.all('*', (req, res, next) => {
 //     res.header("Access-Control-Allow-Origin", "*");
 //     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -13,7 +14,7 @@ const Os = require('os');
 const dir = process.cwd();
 App.use(express.static(dir));
 
-function queryIpList () {
+function queryIpList() {
     // update ip address
     let ifaces = Os.networkInterfaces();
     let _ips = [];
@@ -30,16 +31,31 @@ function queryIpList () {
             return /^(?!169\.254)/.test(_ip);
         });
     }
-    return _ips;
+    return _ips[0];
 }
 
-let server = App.listen(9962, () => {
-    let { address, port } = server.address();
-    address = queryIpList()[0];
-    console.log(`server dir: ${dir}`)
-    const ips = [address, '127.0.0.1', 'localhost'];
+const Port = 9962;
+const ips = [queryIpList(), '127.0.0.1', 'localhost'];
+
+function printUrl(file) {
     ips.forEach(ip => {
-        console.log(`mini-server running: http://${ip}:${port}`);
+        let url = `http://${ip}:${Port}`;
+        if (file) {
+            url += `/${file}`;
+        }
+        console.log(url);
+    })
+    console.log();
+}
+
+let server = App.listen(Port, () => {
+    console.log(`mini-server running, server dir: ${dir}`);
+    printUrl();
+    const files = Fs.readdirSync(dir);
+    files.forEach((file) => {
+        if (file.endsWith('.html')) {
+            printUrl(file);
+        }
     })
 });
 
