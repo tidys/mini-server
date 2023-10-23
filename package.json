@@ -7,6 +7,7 @@
     "mini-server": "./index.js"
   },
   "scripts": {
+    "test": "./index.js"
   },
   "author": "xu_yanfeng",
   "license": "ISC",
